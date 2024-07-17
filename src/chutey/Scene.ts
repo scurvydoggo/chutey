@@ -10,6 +10,12 @@ export default class Scene {
         canvas.height = bg.height;
     }
 
+    // Step the simulation
+    update(): void {
+
+    }
+
+    // Draw the world
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.drawImage(this.bg, 0, 0, this.bg.width, this.bg.height);
     }

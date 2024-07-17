@@ -1,10 +1,10 @@
-import Scene from './chutey/Scene'
+import Game from './chutey/Game';
 
 window.addEventListener('load', function() {
+  // Get the assets
   const canvas = this.document.getElementById("game-container") as HTMLCanvasElement;
-  const ctx = canvas.getContext("2d")!;
+  const bg = this.document.getElementById("background") as HTMLImageElement;
 
-  const scene: Scene = new Scene(canvas, this.document.getElementById("background") as HTMLImageElement);
-
-  scene.draw(ctx);
+  // Run the game
+  new Game(canvas, bg);
 });

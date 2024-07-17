@@ -9,7 +9,14 @@
 </head>
 <body>
     <canvas id="game-container"></canvas>
-    <img id="background" src="assets/background.png" />
+
+    <!-- Load the images but hide them, they will be placed via script -->
+    <img class="hide" id="background" src="assets/background.png" />
+    <img class="hide" id="boat" src="assets/boat.png" />
+    <img class="hide" id="chutist" src="assets/parachutist.png" />
+    <img class="hide" id="plane" src="assets/plane.png" />
+    <img class="hide" id="sea" src="assets/sea.png" />
+
     <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

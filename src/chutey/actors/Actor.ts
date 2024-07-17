@@ -1,5 +1,8 @@
+import Scene from "../Scene";
+
 export default abstract class Actor {
-    sprite: HTMLImageElement;
+    readonly sprite: HTMLImageElement;
+
     x: number;
     y: number;
 
@@ -10,7 +13,8 @@ export default abstract class Actor {
     }
 
     // Step the simulation
-    abstract update(): void
+    update(): void {
+    }
 
     // Draw the actor
     draw(ctx: CanvasRenderingContext2D): void {

@@ -1,6 +1,6 @@
 // Get assets without exposing Document itself; encapsulation and testability
 export default class Assets {
-    private document: Document;
+    private readonly document: Document;
 
     constructor(document: Document) {
         this.document = document;

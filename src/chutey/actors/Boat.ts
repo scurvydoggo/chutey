@@ -4,7 +4,4 @@ export default class Boat extends Actor {
     constructor(sprite: HTMLImageElement, x: number, y: number) {
         super(sprite, x, y);
     }
-
-    update(): void {
-    }
 }

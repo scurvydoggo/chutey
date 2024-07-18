@@ -42,7 +42,7 @@ export default class Scene {
 
     // Step the simulation
     update(): void {
-        // TODO: `Scene.actors` array - cherry picking variables is error prone
+        // FIXME: Error prone: use actor array instead
         this.sea.update();
         this.boat.update();
         this.plane.update();
@@ -55,7 +55,7 @@ export default class Scene {
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.drawImage(this.bg, 0, 0, this.width, this.height);
 
-        // TODO: `Scene.actors` array - cherry picking variables is error prone
+        // FIXME: Error prone: use actor array instead
         this.sea.draw(ctx);
         this.boat.draw(ctx);
         this.plane.draw(ctx);
@@ -68,22 +68,28 @@ export default class Scene {
         this.chutists.push(
             new Chutist(
                 this.chutistImg, x, y, this.boat,
-                c => this.saveChutist(c), c => this.loseChutist(c)
+                c => this.rescueChutist(c),
+                c => this.drownChutist(c)
             )
         );
     }
 
-    saveChutist(chutist: Chutist): void {
+    rescueChutist(chutist: Chutist): void {
         this.removeChutist(chutist);
-        console.log("Rescued!")
+        console.log(`${chutist} rescued!`)
     }
 
-    loseChutist(chutist: Chutist): void {
+    drownChutist(chutist: Chutist): void {
         this.removeChutist(chutist);
-        console.log("Lost one!")
+        console.log(`${chutist} drowned!`)
     }
 
     private removeChutist(chutist: Chutist): void {
-        this.chutists.splice(this.chutists.findIndex(c => c == chutist), 1);
+        const idx = this.chutists.findIndex(c => c == chutist);
+        if (idx >= 0) {
+            this.chutists.splice(idx, 1);
+        } else {
+            throw new RangeError(`Cannot find chutist to remove: ${chutist}`)
+        }
     }
 }

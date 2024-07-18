@@ -6,31 +6,35 @@ type Land = (c: Chutist) => void
 export default class Chutist extends Actor {
     private readonly boat: Boat;
     private readonly landingHeight: number;
-    private readonly onSave: Land;
-    private readonly onLose: Land;
+    private readonly speed: number;
+    private readonly onRescue: Land;
+    private readonly onDrown: Land;
 
-    constructor(sprite: HTMLImageElement, x: number, y: number, boat: Boat, onSave: Land, onLose: Land) {
+    constructor(sprite: HTMLImageElement, x: number, y: number, boat: Boat, onRescue: Land, onDrown: Land) {
         super(sprite, x, y);
 
         this.boat = boat;
+
+        // Randomise the fall speed for challenge
+        this.speed = 1 + Math.ceil(Math.random() * 4);
+
+        // The sprite is elongated so adjust the y
         this.landingHeight = this.boat.center().y - 28;
-        this.onSave = onSave;
-        this.onLose = onLose;
+
+        this.onRescue = onRescue;
+        this.onDrown = onDrown;
     }
 
     update(): void {
-        this.y++;
-        this.checkLanding();
-    }
+        this.y += this.speed;
 
-    checkLanding() {
+        // Determine rescue once we reach the height of the boat deck
         const me = this.center();
-
         if (me.y >= this.landingHeight) {
             if (me.x >= this.boat.x && me.x <= this.boat.x + this.boat.sprite.width) {
-                this.onSave(this);
+                this.onRescue(this);
             } else {
-                this.onLose(this);
+                this.onDrown(this);
             }
         }
     }

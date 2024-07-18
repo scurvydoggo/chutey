@@ -2,8 +2,8 @@ import Assets from "./Assets";
 import Scene from "./Scene";
 
 export default class Game {
-    readonly ctx: CanvasRenderingContext2D;
-    readonly scene: Scene;
+    private readonly ctx: CanvasRenderingContext2D;
+    private readonly scene: Scene;
 
     constructor(ctx: CanvasRenderingContext2D, assets: Assets) {
         this.ctx = ctx;

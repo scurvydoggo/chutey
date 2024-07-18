@@ -1,12 +1,11 @@
-import Actor from './Actor'
-import Chutist from './Chutist';
+import { Actor } from './Actor'
 
 // Have a chutist jump
 type Jump = (x: number, y: number) => void
 
 export default class Plane extends Actor {
-    readonly jump: Jump;
-    readonly spawnX: number;
+    private readonly spawnX: number;
+    private readonly jump: Jump;
 
     constructor(sprite: HTMLImageElement, spawnX: number, spawnY: number, jump: Jump) {
         super(sprite, spawnX, spawnY);

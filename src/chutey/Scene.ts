@@ -7,13 +7,13 @@ import Assets from "./Assets";
 export default class Scene {
     readonly width: number;
     readonly height: number;
-    readonly bg: HTMLImageElement;
-    readonly chutistImg: HTMLImageElement;
 
-    readonly sea: Sea;
-    readonly boat: Boat;
-    readonly plane: Plane;
-    readonly chutists: Chutist[] = [];
+    private readonly bg: HTMLImageElement;
+    private readonly chutistImg: HTMLImageElement;
+    private readonly sea: Sea;
+    private readonly boat: Boat;
+    private readonly plane: Plane;
+    private readonly chutists: Chutist[] = [];
 
     constructor(assets: Assets, width: number, height: number) {
         this.width = width;
@@ -63,7 +63,7 @@ export default class Scene {
 
     spawnChutist(x: number, y: number): void {
         this.chutists.push(
-            new Chutist(this.chutistImg, x, y)
-        )
+            new Chutist(this.chutistImg, x, y, this.boat)
+        );
     }
 }

@@ -1,4 +1,4 @@
-import { Actor } from './Actor'
+import { Actor } from '../Actor'
 
 // Have a chutist jump
 type Jump = (x: number, y: number) => void
@@ -18,7 +18,7 @@ export default class Plane extends Actor {
         this.jumpPoints = this.generateJumpPoints();
     }
 
-    update(): void {
+    step(): void {
         this.x -= 10; // Move quick
 
         // Reset the plane and generate some new points
@@ -35,7 +35,7 @@ export default class Plane extends Actor {
     }
 
     // Generate a random list of X points to jump
-    // TODO: Avoid clumping
+    // TODO: Avoid generating clumps
     generateJumpPoints(): number[] {
         const halfWidth = this.sprite.width / 2;
 

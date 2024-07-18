@@ -1,9 +1,6 @@
-export type Point = {
-    x: number
-    y: number
-}
+export type Point = { x: number, y: number }
 
-export abstract class Actor {
+export abstract class Scenery {
     readonly sprite: HTMLImageElement;
     x: number;
     y: number;
@@ -14,21 +11,9 @@ export abstract class Actor {
         this.y = y;
     }
 
-    // Step the simulation
-    update(): void {
-    }
-
-    // Draw the actor
+    // Draw the sprite
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.drawImage(this.sprite, this.x, this.y);
-    }
-
-    // Determine the distance between actor midpoints
-    distanceTo(other: Actor): number {
-        const us = this.center();
-        const them = other.center();
-
-        return Math.hypot(us.x - them.x, us.y - them.y);
     }
 
     // The center coordinates of the sprite

@@ -1,4 +1,4 @@
-import { Actor } from './Actor'
+import { Actor } from '../Actor'
 import Boat from './Boat';
 
 type Land = (c: Chutist) => void
@@ -25,7 +25,7 @@ export default class Chutist extends Actor {
         this.onDrown = onDrown;
     }
 
-    update(): void {
+    step(): void {
         this.y += this.speed;
 
         // Determine rescue once we reach the height of the boat deck

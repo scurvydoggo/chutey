@@ -42,6 +42,8 @@ export default class Scene {
 
     // Step the simulation
     update(): void {
+        // TODO: `Scene.actors` array - cherry picking variables is error prone
+        this.sea.update();
         this.boat.update();
         this.plane.update();
         for (var c of this.chutists) {
@@ -53,6 +55,7 @@ export default class Scene {
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.drawImage(this.bg, 0, 0, this.width, this.height);
 
+        // TODO: `Scene.actors` array - cherry picking variables is error prone
         this.sea.draw(ctx);
         this.boat.draw(ctx);
         this.plane.draw(ctx);
@@ -63,7 +66,24 @@ export default class Scene {
 
     spawnChutist(x: number, y: number): void {
         this.chutists.push(
-            new Chutist(this.chutistImg, x, y, this.boat)
+            new Chutist(
+                this.chutistImg, x, y, this.boat,
+                c => this.saveChutist(c), c => this.loseChutist(c)
+            )
         );
+    }
+
+    saveChutist(chutist: Chutist): void {
+        this.removeChutist(chutist);
+        console.log("Rescued!")
+    }
+
+    loseChutist(chutist: Chutist): void {
+        this.removeChutist(chutist);
+        console.log("Lost one!")
+    }
+
+    private removeChutist(chutist: Chutist): void {
+        this.chutists.splice(this.chutists.findIndex(c => c == chutist), 1);
     }
 }

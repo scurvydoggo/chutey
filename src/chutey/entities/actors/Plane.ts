@@ -1,5 +1,8 @@
 import { Actor } from '../Actor'
 
+// The max number of chutists to spawn per flight across the screen
+const maxJumpsPerRun = 2;
+
 // Have a chutist jump
 type Jump = (x: number, y: number) => void
 
@@ -39,7 +42,7 @@ export default class Plane extends Actor {
     generateJumpPoints(): number[] {
         const halfWidth = this.sprite.width / 2;
 
-        const num = Math.ceil(Math.random() * 3);
+        const num = Math.ceil(Math.random() * maxJumpsPerRun);
         const points: number[] = new Array(num);
         for (var i = 0; i < num; i++) {
             points[i] = halfWidth + Math.random() * (this.spawnX - halfWidth);

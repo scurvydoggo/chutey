@@ -1,4 +1,4 @@
-import Assets from "./View";
+import Assets from "./Assets";
 import { Scene } from "./Scene";
 import HomeScene from "./scenes/HomeScene";
 import GameScene from "./scenes/GameScene";

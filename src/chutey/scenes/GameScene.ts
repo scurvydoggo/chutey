@@ -5,16 +5,48 @@ import Chutist from "../entities/actors/Chutist";
 import Plane from "../entities/actors/Plane";
 import Sea from "../entities/scenery/Sea";
 
-export default class GameScene extends Scene {
-    private readonly sea: Sea;
+const initialLives = 3;
+const pointsPerRescue = 10;
 
-    private readonly chutistImg: HTMLImageElement;
+class Score {
+    lives: number;
+    score: number;
+
+    private readonly x: number;
+    private readonly y: number;
+    private readonly spacing: number;
+
+    constructor(x: number, y: number, spacing: number) {
+        this.x = x;
+        this.y = y;
+        this.spacing = spacing;
+
+        this.lives = initialLives;
+        this.score = 0;
+    }
+
+    draw(ctx: CanvasRenderingContext2D): void {
+        ctx.font = "bold 18pt Calibri";
+        ctx.fillStyle = "gray"
+        ctx.textAlign = "left"
+        ctx.textBaseline = "middle"
+        ctx.fillText(`Score: ${this.score}`, this.x, this.y);
+        ctx.fillText(`Lives: ${this.lives}`, this.x, this.y + this.spacing);
+    }
+}
+
+export default class GameScene extends Scene {
+    private readonly score: Score;
+    private readonly sea: Sea;
     private readonly boat: Boat;
     private readonly plane: Plane;
     private readonly chutists: Chutist[] = [];
+    private readonly chutistImg: HTMLImageElement;
 
     constructor(assets: Assets, backgroundId: string, width: number, height: number, nextScene: NextScene) {
         super(assets, backgroundId, width, height, nextScene);
+
+        this.score = new Score(20, 30, 30);
 
         const seaImg = assets.image("sea");
         this.sea = new Sea(seaImg, 0, height - seaImg.height);
@@ -60,6 +92,9 @@ export default class GameScene extends Scene {
         for (var c of this.chutists) {
             c.draw(ctx);
         }
+
+        // UI widgets float above the game
+        this.score.draw(ctx);
     }
 
     spawnChutist(x: number, y: number): void {
@@ -74,12 +109,20 @@ export default class GameScene extends Scene {
 
     rescueChutist(chutist: Chutist): void {
         this.removeChutist(chutist);
+
+        this.score.score += pointsPerRescue;
         console.log(`${chutist} rescued!`)
     }
 
     drownChutist(chutist: Chutist): void {
         this.removeChutist(chutist);
-        console.log(`${chutist} drowned!`)
+
+        this.score.lives--;
+        if (this.score.lives == 0) {
+            // TODO: Make this a UI widget
+            alert(`Game over! You scored ${this.score.score}.`)
+            this.nextScene();
+        }
     }
 
     private removeChutist(chutist: Chutist): void {
